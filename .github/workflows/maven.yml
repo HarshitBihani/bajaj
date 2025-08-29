@@ -1,5 +1,6 @@
 name: Build Spring Boot JAR
 
+
 on:
   push:
     branches: [ "main" ]
@@ -10,9 +11,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+     
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Set up JDK 17
+   
+      - name: Set up Java 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
@@ -21,8 +25,12 @@ jobs:
       - name: Build with Maven
         run: mvn clean package -DskipTests
 
-      - name: Upload artifact
+     
+      - name: Upload JAR artifact
         uses: actions/upload-artifact@v4
         with:
           name: bajaj-jar
           path: target/*.jar
+
+      - name: List built files
+        run: ls -l target/
